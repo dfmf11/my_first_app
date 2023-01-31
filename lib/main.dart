@@ -2,6 +2,8 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'sample-query.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -36,30 +38,33 @@ class MyAppState extends ChangeNotifier {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final results =  SampleData.test();
+    print(results);
+
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SafeArea(
-          child: Scaffold(
-            body: Column(
-              children: [
-                Text('A random idea:'),
-                BigCard(pair: pair),
-                SizedBox(height: 10),
-                ElevatedButton(
-                    onPressed: () {
-                      appState.getNext();
-                    },
-                    child: Text('Next'))
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
+    return         SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            Text('A random idea:'),
+            BigCard(pair: pair),
+            SizedBox(height: 10),
+            ElevatedButton(
+                onPressed: () {
+                  appState.getNext();
+                },
+                child: Text('Next')),
+            FutureBuilder(
+              future: results,
+              builder: ((context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return CircularProgressIndicator();
+    } ))])));
   }
 }
 
