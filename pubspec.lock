@@ -136,7 +136,7 @@ packages:
       name: pocketbase
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.1"
+    version: "0.7.1+1"
   provider:
     dependency: "direct main"
     description:
