@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/values/color.value.dart';
+import '../../../../routes/app_pages.dart';
 import '../controllers/intro_controller.dart';
 
 class IntroView extends GetView<IntroController> {
@@ -62,7 +63,7 @@ class IntroView extends GetView<IntroController> {
                                 RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.circular(50.0)))),
-                    onPressed: () {},
+                    onPressed: () => Get.toNamed(Routes.LOGIN),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: Text(
