@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../../../core/theme/app_style.dart';
+import '../../../../../core/utils/size_utils.dart';
 import '../../../../../core/values/color.value.dart';
 import '../../../../routes/app_pages.dart';
 import '../controllers/intro_controller.dart';
@@ -84,7 +86,7 @@ class IntroView extends GetView<IntroController> {
                                 RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.circular(50.0)))),
-                    onPressed: () {},
+                    onPressed: () => Get.toNamed(Routes.REGISTER),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: Text(
@@ -100,13 +102,38 @@ class IntroView extends GetView<IntroController> {
                 height: 40,
               ),
               Container(
-                width: Get.width,
-                height: 150,
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
+                  width: Get.width,
+                  height: 170,
+                  decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(20),
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/group_19.png'),
+                          fit: BoxFit.cover)),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                            padding: getPadding(left: 15, top: 20, bottom: 10),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text("15%",
+                                      textAlign: TextAlign.left,
+                                      style: AppStyle.txtMontserratRomanBold48),
+                                  Text("Discount",
+                                      textAlign: TextAlign.left,
+                                      style: AppStyle.txtMontserratRomanBold28),
+                                  Padding(
+                                      padding: getPadding(top: 6),
+                                      child: Text("From Our Store",
+                                          textAlign: TextAlign.left,
+                                          style: AppStyle
+                                              .txtMontserratRomanRegular16))
+                                ])),
+                      ]))
             ],
           ),
         ),

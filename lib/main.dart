@@ -14,17 +14,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: Routes.INTRO,
-      getPages: AppPages.routes,
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        fontFamily: GoogleFonts.poppins(color: Colors.white).fontFamily,
-        scaffoldBackgroundColor: Colors.black,
-        primaryColor: Color(0xFFFF6E40),
+    return NotificationListener<OverscrollIndicatorNotification>(
+      onNotification: (scroll) {
+        scroll.disallowIndicator();
+        return true;
+      },
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: Routes.INTRO,
+        getPages: AppPages.routes,
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          fontFamily: GoogleFonts.poppins(color: Colors.white).fontFamily,
+          scaffoldBackgroundColor: Colors.black,
+          primaryColor: Color(0xFFFF6E40),
+        ),
+        home: IntroView(),
       ),
-      home: IntroView(),
     );
   }
 }
