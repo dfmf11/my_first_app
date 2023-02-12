@@ -82,7 +82,7 @@ class LoginView extends GetView<LoginController> {
                                         },
                                         itemCount: 2,
                                         itemBuilder: (context, index) {
-                                          return PasswordItemWidget(
+                                          return LoginItemWidget(
                                             index: index,
                                           );
                                         })),
@@ -102,7 +102,7 @@ class LoginView extends GetView<LoginController> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           50.0)))),
-                                      onPressed: () {},
+                                      onPressed: () => Get.toNamed(Routes.HOME),
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 10.0),
@@ -159,15 +159,15 @@ class LoginView extends GetView<LoginController> {
   }
 }
 
-class PasswordItemWidget extends StatefulWidget {
-  PasswordItemWidget({required this.index});
+class LoginItemWidget extends StatefulWidget {
+  LoginItemWidget({required this.index});
   final int index;
 
   @override
-  State<PasswordItemWidget> createState() => _PasswordItemWidgetState();
+  State<LoginItemWidget> createState() => _LoginItemWidgetState();
 }
 
-class _PasswordItemWidgetState extends State<PasswordItemWidget> {
+class _LoginItemWidgetState extends State<LoginItemWidget> {
   final textFieldFocusNode = FocusNode();
 
   bool _obscured = true;
@@ -186,39 +186,73 @@ class _PasswordItemWidgetState extends State<PasswordItemWidget> {
   Widget build(BuildContext context) {
     var email = false.obs;
     return Container(
-        decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.2),
-            borderRadius: BorderRadius.all(Radius.circular(20))),
-        height: 45.00,
-        width: 290.00,
-        child: TextField(
-          onChanged: ((value) {
-            if (EmailValidator.validate(value)) {
-              email(true);
-            } else {
-              email(false);
-            }
-          }),
-          keyboardType: TextInputType.emailAddress,
-          style: TextStyle(color: Colors.black),
-          decoration: InputDecoration(
-            suffixIcon: Icon(
-              Icons.check_circle_rounded,
-              color: email.value ? Colors.green : Colors.grey[400],
-            ),
-            prefixIcon: Icon(
-              Icons.mail_outlined,
-              color: Colors.grey[400],
-            ),
-            hintText: "Username / Email",
-            hintStyle: GoogleFonts.poppins(
-                textStyle: TextStyle(
+      decoration: BoxDecoration(
+          color: Colors.grey.withOpacity(0.2),
+          borderRadius: BorderRadius.all(Radius.circular(20))),
+      height: 45.00,
+      width: 290.00,
+      child: widget.index == 0
+          ? Obx(() => TextField(
+                onChanged: ((value) {
+                  if (EmailValidator.validate(value)) {
+                    email(true);
+                  } else {
+                    email(false);
+                  }
+                }),
+                keyboardType: TextInputType.emailAddress,
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  suffixIcon: Icon(
+                    Icons.check_circle_rounded,
+                    color: email.value ? Colors.green : Colors.grey[400],
+                  ),
+                  prefixIcon: Icon(
+                    Icons.mail_outlined,
                     color: Colors.grey[400],
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400)),
-            contentPadding: EdgeInsets.fromLTRB(5.0, 20.0, 20.0, 10.0),
-            border: InputBorder.none,
-          ),
-        ));
+                  ),
+                  hintText: "Username / Email",
+                  hintStyle: GoogleFonts.poppins(
+                      textStyle: TextStyle(
+                          color: Colors.grey[400],
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400)),
+                  contentPadding: EdgeInsets.fromLTRB(5.0, 20.0, 20.0, 10.0),
+                  border: InputBorder.none,
+                ),
+              ))
+          : TextField(
+              focusNode: textFieldFocusNode,
+              keyboardType: TextInputType.visiblePassword,
+              style: TextStyle(color: Colors.black),
+              obscureText: _obscured,
+              decoration: InputDecoration(
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                  child: GestureDetector(
+                    onTap: _toggleObscured,
+                    child: Icon(
+                        _obscured
+                            ? Icons.visibility_off_rounded
+                            : Icons.visibility_rounded,
+                        size: 24,
+                        color: Colors.grey[400]),
+                  ),
+                ),
+                prefixIcon: Icon(
+                  Icons.lock_outline,
+                  color: Colors.grey[400],
+                ),
+                hintText: "Password",
+                hintStyle: GoogleFonts.poppins(
+                    textStyle: TextStyle(
+                        color: Colors.grey[400],
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400)),
+                contentPadding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
+                border: InputBorder.none,
+              ),
+            ),
+    );
   }
 }

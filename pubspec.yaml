@@ -24,6 +24,7 @@ dependencies:
   cached_network_image: ^3.2.3
   flutter_svg_provider: ^1.0.3
   email_validator: ^2.1.17
+  badges: ^3.0.2
 
 
 dev_dependencies:

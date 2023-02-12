@@ -10,6 +10,8 @@ import '../modules/auth/login/views/login_view.dart';
 import '../modules/auth/register/bindings/register_binding.dart';
 import '../modules/auth/register/views/register_view.dart';
 import '../modules/auth/views/auth_view.dart';
+import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/home_view.dart';
 
 part 'app_routes.dart';
 
@@ -45,6 +47,11 @@ class AppPages {
           binding: ForgotPasswordBinding(),
         ),
       ],
+    ),
+    GetPage(
+      name: _Paths.HOME,
+      page: () => HomeView(),
+      binding: HomeBinding(),
     ),
   ];
 }

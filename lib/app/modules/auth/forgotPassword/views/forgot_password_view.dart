@@ -85,9 +85,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                                         },
                                         itemCount: 1,
                                         itemBuilder: (context, index) {
-                                          return PasswordItemWidget(
-                                            index: index,
-                                          );
+                                          return PasswordItemWidget();
                                         })),
                                 SizedBox(
                                   height: 20,
@@ -118,6 +116,9 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                                         ),
                                       )),
                                 ),
+                                SizedBox(
+                                  height: 5,
+                                ),
                                 RichText(
                                     text: TextSpan(children: [
                                       TextSpan(
@@ -147,8 +148,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
 }
 
 class PasswordItemWidget extends StatefulWidget {
-  PasswordItemWidget({required this.index});
-  final int index;
+  PasswordItemWidget();
 
   @override
   State<PasswordItemWidget> createState() => _PasswordItemWidgetState();
