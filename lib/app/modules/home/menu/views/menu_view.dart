@@ -112,151 +112,144 @@ class MenuView extends GetView<MenuController> {
                     SizedBox(
                       height: 10,
                     ),
-                    ListView.separated(
-                        // scrollDirection: Axis.horizontal,
+                    GridView.builder(
                         physics: NeverScrollableScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 10),
+                        itemCount: 10,
                         shrinkWrap: true,
-                        itemCount: 2,
-                        separatorBuilder: (context, index) {
-                          return SizedBox(
-                            height: 5,
-                          );
-                        },
                         itemBuilder: (context, index) {
-                          return Align(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: SizedBox(
-                                width: 170,
-                                height: Get.height * 0.3,
-                                child: LayoutBuilder(
-                                  builder: (BuildContext context,
-                                      BoxConstraints constraints) {
-                                    return Column(
-                                      children: [
-                                        Container(
-                                          width: constraints.maxWidth,
-                                          height: constraints.maxHeight * 0.65,
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey.shade300,
-                                              image: const DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/images/brgr.jpg"),
-                                                fit: BoxFit.contain,
-                                              )),
-                                          child: Stack(
-                                            fit: StackFit.loose,
-                                            children: [
-                                              Align(
-                                                alignment: Alignment.topRight,
-                                                child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: Colors
-                                                          .orange.shade100
-                                                          .withOpacity(0.7),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              2),
-                                                    ),
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: SizedBox(
+                              width: 170,
+                              height: Get.height * 0.3,
+                              child: LayoutBuilder(
+                                builder: (BuildContext context,
+                                    BoxConstraints constraints) {
+                                  return Column(
+                                    children: [
+                                      Container(
+                                        width: constraints.maxWidth,
+                                        height: constraints.maxHeight * 0.65,
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey.shade300,
+                                            image: const DecorationImage(
+                                              image: AssetImage(
+                                                  "assets/images/brgr.jpg"),
+                                              fit: BoxFit.contain,
+                                            )),
+                                        child: Stack(
+                                          fit: StackFit.loose,
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.topRight,
+                                              child: Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Colors
+                                                        .orange.shade100
+                                                        .withOpacity(0.7),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            2),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 15.0,
+                                                            vertical: 5),
+                                                    child: Text("POPULAR",
+                                                        style: GoogleFonts.poppins(
+                                                            textStyle: TextStyle(
+                                                                color:
+                                                                    primaryColor,
+                                                                fontSize: 11,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500))),
+                                                  )),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        width: constraints.maxWidth,
+                                        // height: constraints.maxHeight,
+                                        color: Colors.white,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 8.0,
+                                              ),
+                                              child: Text("Hawaian Burger",
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: Colors.black)),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8.0),
+                                              child: Text("RM 10.00",
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Colors.black)),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 8.0,
+                                                  vertical: 5.2),
+                                              child: SizedBox(
+                                                width: Get.width,
+                                                height: 30,
+                                                child: ElevatedButton(
+                                                    style: ButtonStyle(
+                                                        backgroundColor:
+                                                            MaterialStateProperty.all<
+                                                                    Color>(
+                                                                primaryColor),
+                                                        shape: MaterialStateProperty.all<
+                                                                RoundedRectangleBorder>(
+                                                            RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            50.0)))),
+                                                    onPressed: () =>
+                                                        Get.toNamed(Routes.HOME),
                                                     child: Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 15.0,
-                                                              vertical: 5),
-                                                      child: Text("POPULAR",
-                                                          style: GoogleFonts.poppins(
-                                                              textStyle: TextStyle(
-                                                                  color:
-                                                                      primaryColor,
-                                                                  fontSize: 11,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500))),
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 5.0),
+                                                      child: Text(
+                                                        'Add to Cart',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight.w900,
+                                                            fontSize: 14),
+                                                      ),
                                                     )),
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
-                                        Container(
-                                          width: constraints.maxWidth,
-                                          // height: constraints.maxHeight,
-                                          color: Colors.white,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  horizontal: 8.0,
-                                                ),
-                                                child: Text("Hawaian Burger",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        color: Colors.black)),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 8.0),
-                                                child: Text("RM 10.00",
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color: Colors.black)),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 8.0,
-                                                    vertical: 5.2),
-                                                child: SizedBox(
-                                                  width: Get.width,
-                                                  height: 30,
-                                                  child: ElevatedButton(
-                                                      style: ButtonStyle(
-                                                          backgroundColor:
-                                                              MaterialStateProperty
-                                                                  .all<Color>(
-                                                                      primaryColor),
-                                                          shape: MaterialStateProperty.all<
-                                                                  RoundedRectangleBorder>(
-                                                              RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius.circular(
-                                                                          50.0)))),
-                                                      onPressed: () =>
-                                                          Get.toNamed(
-                                                              Routes.HOME),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                vertical: 5.0),
-                                                        child: Text(
-                                                          'Add to Cart',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w900,
-                                                              fontSize: 14),
-                                                        ),
-                                                      )),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                ),
+                                      ),
+                                    ],
+                                  );
+                                },
                               ),
                             ),
                           );

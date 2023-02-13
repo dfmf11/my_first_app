@@ -25,6 +25,7 @@ dependencies:
   flutter_svg_provider: ^1.0.3
   email_validator: ^2.1.17
   badges: ^3.0.2
+  flutter_launcher_icons: ^0.9.3
 
 
 dev_dependencies:
@@ -32,6 +33,13 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/daim_logo.png"
+  remove_alpha_ios: true
+
 
 flutter: 
   uses-material-design: true

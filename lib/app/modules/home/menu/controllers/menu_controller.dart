@@ -9,7 +9,7 @@ class MenuController extends GetxController {
   final count = 0.obs;
 
   bool selected = false;
-  final List<ItemModel> chipsList = [
+  final List<ItemModel> _chipsList = [
     ItemModel("Android", Colors.green, false),
     ItemModel("Flutter", Colors.blueGrey, false),
     ItemModel("Ios", Colors.deepOrange, false),
