@@ -1,29 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../data/models/filterCategory.dart';
+
 class MenuController extends GetxController {
   //TODO: Implement MenuController
 
   final textFieldFocusNode = FocusNode();
 
-  final count = 0.obs;
-
-  bool selected = false;
-  final List<ItemModel> _chipsList = [
-    ItemModel("Android", Colors.green, false),
-    ItemModel("Flutter", Colors.blueGrey, false),
-    ItemModel("Ios", Colors.deepOrange, false),
-    ItemModel("Python", Colors.cyan, false),
-    ItemModel("React JS", Colors.teal, false),
+  List<FoodCategory> filterName = [
+    FoodCategory(name: 'Burger', icon: Icons.food_bank, id: 100),
+    FoodCategory(name: 'Nasi', icon: Icons.favorite, id: 200),
+    FoodCategory(name: 'Nasi', icon: Icons.favorite, id: 300),
+    FoodCategory(name: 'Ayam', icon: Icons.favorite, id: 400),
   ];
 
+  final filterSelected = [].obs;
+
+  final count = 0.obs;
+
   void increment() => count.value++;
-}
-
-class ItemModel {
-  String label;
-  Color color;
-  bool isSelected;
-
-  ItemModel(this.label, this.color, this.isSelected);
 }
