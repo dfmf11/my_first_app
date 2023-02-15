@@ -189,7 +189,7 @@ class MenuView extends GetView<MenuController> {
                       color: Colors.grey.shade300,
                       image: const DecorationImage(
                         image: AssetImage("assets/images/brgr.jpg"),
-                        fit: BoxFit.contain,
+                        fit: BoxFit.fitWidth,
                       )),
                   child: Stack(
                     fit: StackFit.loose,

@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -31,7 +32,18 @@ class HomeView extends GetView<HomeController> {
               items: [
                 BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.shopping_cart), label: 'Cart'),
+                    icon: Badge(
+                      position: BadgePosition.topEnd(top: 5, end: 5),
+                      badgeContent: Text(
+                        '0',
+                        style: TextStyle(fontSize: 7),
+                      ),
+                      child: IconButton(
+                        icon: const Icon(Icons.shopping_cart_rounded),
+                        onPressed: () {},
+                      ),
+                    ),
+                    label: 'Cart'),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.favorite), label: 'Favorite')
               ],
