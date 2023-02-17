@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_first_app/app/data/models/addToCart._model.dart';
 import 'package:my_first_app/app/data/models/filterCategory.dart';
+import 'package:my_first_app/app/data/models/product_model.dart';
 import 'package:my_first_app/core/values/color.value.dart';
 import 'package:badges/badges.dart';
 import '../../../../data/helper/focus_scope_helper.dart';
-import '../../../../routes/app_pages.dart';
+import '../../cart/controllers/cart_controller.dart';
 import '../controllers/menu_controller.dart';
 
 class MenuView extends GetView<MenuController> {
@@ -129,9 +131,15 @@ class MenuView extends GetView<MenuController> {
                         crossAxisSpacing: 4.0,
                         mainAxisSpacing: 8.0,
                         shrinkWrap: true,
-                        children: List.generate(10, (index) {
-                          return Center(child: test1());
-                        })),
+                        children: [
+                          // ListView.builder(
+                          //   itemCount: controller.productDetail.length,
+                          //   itemBuilder: (BuildContext context, int index) {
+                          //     return test1(controller.productDetail[index]);
+                          //   },
+                          // ),
+                          ...controller.productDetail.map((e) => test1(e)),
+                        ]),
                   )
                 ])),
           ),
@@ -172,12 +180,11 @@ class MenuView extends GetView<MenuController> {
     );
   }
 
-  ClipRRect test1() {
+  ClipRRect test1(Product product) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: SizedBox(
         width: 170,
-        // height: 20,
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             return Column(
@@ -187,8 +194,8 @@ class MenuView extends GetView<MenuController> {
                   height: 150,
                   decoration: BoxDecoration(
                       color: Colors.grey.shade300,
-                      image: const DecorationImage(
-                        image: AssetImage("assets/images/brgr.jpg"),
+                      image: DecorationImage(
+                        image: NetworkImage(product.imageUrl),
                         fit: BoxFit.fitWidth,
                       )),
                   child: Stack(
@@ -217,7 +224,6 @@ class MenuView extends GetView<MenuController> {
                 ),
                 Container(
                   width: constraints.maxWidth,
-                  // height: constraints.maxHeight,
                   color: Colors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,7 +233,7 @@ class MenuView extends GetView<MenuController> {
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8.0,
                         ),
-                        child: Text("Hawaian Burger",
+                        child: Text(product.name,
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700,
@@ -235,7 +241,7 @@ class MenuView extends GetView<MenuController> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text("RM 10.00",
+                        child: Text('RM ${product.price.toString()}',
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -243,8 +249,7 @@ class MenuView extends GetView<MenuController> {
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: 8.0,
-                        ),
+                            horizontal: 8.0, vertical: 6.4),
                         child: SizedBox(
                           width: Get.width,
                           height: 30,
@@ -258,7 +263,14 @@ class MenuView extends GetView<MenuController> {
                                       RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(50.0)))),
-                              onPressed: () => Get.toNamed(Routes.HOME),
+                              onPressed: () {
+                                Get.find<CartController>().addToCart.add(
+                                    addToCartModel(
+                                        name: product.name,
+                                        price: product.price,
+                                        imageUrl: product.imageUrl,
+                                        quantity: 1));
+                              },
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(),
                                 child: Text(

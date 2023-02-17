@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../cart/controllers/cart_controller.dart';
 import '../cart/views/cart_view.dart';
 import '../controllers/home_controller.dart';
 import '../favorite/views/favorite_view.dart';
@@ -35,12 +36,14 @@ class HomeView extends GetView<HomeController> {
                     icon: Badge(
                       position: BadgePosition.topEnd(top: 5, end: 5),
                       badgeContent: Text(
-                        '0',
+                        Get.find<CartController>().addToCart.length.toString(),
                         style: TextStyle(fontSize: 7),
                       ),
                       child: IconButton(
                         icon: const Icon(Icons.shopping_cart_rounded),
-                        onPressed: () {},
+                        onPressed: () {
+                          print('data');
+                        },
                       ),
                     ),
                     label: 'Cart'),
