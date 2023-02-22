@@ -83,13 +83,13 @@ class CartView extends GetView<CartController> {
                                           if (controller
                                                   .addToCart[index].quantity >
                                               1) {
-                                            Get.find<CartController>()
-                                                .addToCart[index]
-                                                .quantity--;
-                                            Get.find<CartController>()
-                                                .addToCart
-                                                .refresh();
-                                          } else {}
+                                            controller
+                                                .addToCart[index].quantity--;
+                                            controller.addToCart.refresh();
+                                          } else {
+                                            controller.addToCart
+                                                .removeAt(index);
+                                          }
                                         }),
                                         child: Container(
                                             width: 60,
@@ -118,9 +118,7 @@ class CartView extends GetView<CartController> {
                                       height: 50,
                                       child: Center(
                                         child: Text(
-                                            Get.find<CartController>()
-                                                .addToCart[index]
-                                                .quantity
+                                            controller.addToCart[index].quantity
                                                 .toString(),
                                             style: TextStyle(
                                                 fontSize: 15,
@@ -130,12 +128,8 @@ class CartView extends GetView<CartController> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        Get.find<CartController>()
-                                            .addToCart[index]
-                                            .quantity++;
-                                        Get.find<CartController>()
-                                            .addToCart
-                                            .refresh();
+                                        controller.addToCart[index].quantity++;
+                                        controller.addToCart.refresh();
                                       },
                                       child: Container(
                                           width: 60,

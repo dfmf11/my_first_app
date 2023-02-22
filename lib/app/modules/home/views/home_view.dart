@@ -42,7 +42,7 @@ class HomeView extends GetView<HomeController> {
                       child: IconButton(
                         icon: const Icon(Icons.shopping_cart_rounded),
                         onPressed: () {
-                          print('data');
+                          bottomNavigationController.changeIndex(1);
                         },
                       ),
                     ),

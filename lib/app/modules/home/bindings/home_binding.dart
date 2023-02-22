@@ -17,5 +17,8 @@ class HomeBinding extends Bindings {
     Get.lazyPut<CartController>(
       () => CartController(),
     );
+    // Get.lazyPut<FavoriteController>(
+    //   () => FavoriteController(),
+    // );
   }
 }

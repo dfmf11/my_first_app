@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_first_app/app/data/models/addToCart._model.dart';
 import 'package:my_first_app/app/data/models/filterCategory.dart';
 import 'package:my_first_app/app/data/models/product_model.dart';
 import 'package:my_first_app/core/values/color.value.dart';
 import 'package:badges/badges.dart';
 import '../../../../data/helper/focus_scope_helper.dart';
+import '../../../../data/models/addToCart_model.dart';
 import '../../cart/controllers/cart_controller.dart';
+import '../../favorite/controllers/favorite_controller.dart';
 import '../controllers/menu_controller.dart';
 
 class MenuView extends GetView<MenuController> {
@@ -124,22 +125,27 @@ class MenuView extends GetView<MenuController> {
                   ),
                   SizedBox(
                     width: Get.width,
-                    child: GridView.count(
-                        physics: NeverScrollableScrollPhysics(),
-                        childAspectRatio: 0.7,
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 4.0,
-                        mainAxisSpacing: 8.0,
-                        shrinkWrap: true,
-                        children: [
-                          // ListView.builder(
-                          //   itemCount: controller.productDetail.length,
-                          //   itemBuilder: (BuildContext context, int index) {
-                          //     return test1(controller.productDetail[index]);
-                          //   },
-                          // ),
-                          ...controller.productDetail.map((e) => test1(e)),
-                        ]),
+                    child: Obx(
+                      () => GridView.count(
+                          physics: NeverScrollableScrollPhysics(),
+                          childAspectRatio: 0.7,
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 4.0,
+                          mainAxisSpacing: 8.0,
+                          shrinkWrap: true,
+                          children: [
+                            // ListView.builder(
+                            //   itemCount: controller.productDetail.length,
+                            //   itemBuilder: (BuildContext context, int index) {
+                            //     return test1(controller.productDetail[index]);
+                            //   },
+                            // ),
+                            ...controller.productDetail.map((e) => test1(
+                                e,
+                                controller.productDetail
+                                    .indexWhere((element) => element == e))),
+                          ]),
+                    ),
                   )
                 ])),
           ),
@@ -180,7 +186,7 @@ class MenuView extends GetView<MenuController> {
     );
   }
 
-  ClipRRect test1(Product product) {
+  ClipRRect test1(Product product, int index) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: SizedBox(
@@ -202,91 +208,123 @@ class MenuView extends GetView<MenuController> {
                     fit: StackFit.loose,
                     children: [
                       Align(
+                          alignment: Alignment.topLeft,
+                          child: IconButton(
+                            onPressed: () {
+                              var productListController =
+                                  controller.productDetail.elementAt(index);
+                              productListController.isFav =
+                                  !productListController.isFav;
+
+                              Get.find<MenuController>()
+                                  .productDetail
+                                  .refresh();
+                            },
+                            color: product.isFav ? Colors.red : Colors.white,
+                            icon: Icon(Icons.favorite),
+                          )),
+                      Align(
                         alignment: Alignment.topRight,
-                        child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.orange.shade100.withOpacity(0.7),
-                              borderRadius: BorderRadius.circular(2),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 15.0, vertical: 5),
-                              child: Text("POPULAR",
-                                  style: GoogleFonts.poppins(
-                                      textStyle: TextStyle(
-                                          color: primaryColor,
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w500))),
-                            )),
+                        child: !!product.showBanner
+                            ? Container(
+                                decoration: BoxDecoration(
+                                  color:
+                                      Colors.orange.shade100.withOpacity(0.7),
+                                  borderRadius: BorderRadius.circular(2),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 15.0, vertical: 5),
+                                  child: Text("POPULAR",
+                                      style: GoogleFonts.poppins(
+                                          textStyle: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.w500))),
+                                ))
+                            : SizedBox(),
                       ),
                     ],
                   ),
                 ),
-                Container(
-                  width: constraints.maxWidth,
-                  color: Colors.white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0,
+                Expanded(
+                  child: Container(
+                    width: constraints.maxWidth,
+                    color: Colors.white,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0,
+                          ),
+                          child: Text(product.name,
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black)),
                         ),
-                        child: Text(product.name,
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text('RM ${product.price.toString()}',
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black)),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 8.0, vertical: 6.4),
-                        child: SizedBox(
-                          width: Get.width,
-                          height: 30,
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          primaryColor),
-                                  shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(50.0)))),
-                              onPressed: () {
-                                Get.find<CartController>().addToCart.add(
-                                    addToCartModel(
-                                        name: product.name,
-                                        price: product.price,
-                                        imageUrl: product.imageUrl,
-                                        quantity: 1));
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(),
-                                child: Text(
-                                  'Add to Cart',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 14),
-                                ),
-                              )),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text('RM ${product.price.toString()}',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black)),
                         ),
-                      ),
-                      SizedBox(
-                        height: 18,
-                      )
-                    ],
+                        Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8.0, vertical: 6.4),
+                            child: SizedBox(
+                              width: Get.width,
+                              height: 30,
+                              child: ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              primaryColor),
+                                      shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      50.0)))),
+                                  onPressed: () {
+                                    var addCartController =
+                                        Get.find<CartController>().addToCart;
+                                    print(product.toString());
+                                    if (!addCartController
+                                        .map((element) => element.name)
+                                        .contains(product.name)) {
+                                      // print("uniques");
+                                      addCartController.add(AddToCart(
+                                          name: product.name,
+                                          price: product.price,
+                                          imageUrl: product.imageUrl,
+                                          quantity: 1));
+                                    } else {
+                                      // print("duplicate");
+                                      int index = addCartController.indexWhere(
+                                          (element) =>
+                                              element.name == product.name);
+                                      addCartController[index].quantity++;
+                                      addCartController.refresh();
+                                    }
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(),
+                                    child: Text(
+                                      'Add to Cart',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 14),
+                                    ),
+                                  )),
+                            )),
+                      ],
+                    ),
                   ),
                 ),
               ],
